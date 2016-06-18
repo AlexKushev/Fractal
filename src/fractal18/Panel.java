@@ -20,8 +20,8 @@ public class Panel extends javax.swing.JPanel {
     public Panel() {
         initComponents();
     }
-    
-    RunMe run = new RunMe();
+
+    Fractal18 run = new Fractal18();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,14 +34,14 @@ public class Panel extends javax.swing.JPanel {
 
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
-        screenSize = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        threadCount = new javax.swing.JTextField();
         showImageButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         coordinate = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         fileName = new javax.swing.JTextField();
+        threads = new javax.swing.JComboBox<>();
+        screenSize = new javax.swing.JComboBox<>();
 
         jLabel1.setText("Screen Size");
 
@@ -54,7 +54,7 @@ public class Panel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setText("Coordinate");
+        jLabel5.setText("Coordinates");
 
         coordinate.setToolTipText("");
         coordinate.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +65,11 @@ public class Panel extends javax.swing.JPanel {
 
         jLabel6.setText("File name");
 
+        threads.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "5", "10", "50", "100" }));
+
+        screenSize.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "640x480", "800x600", "1280x720", "1920x1080", "4096x2160" }));
+        screenSize.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,24 +77,25 @@ public class Panel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(showImageButton)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(threadCount, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(showImageButton)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel4))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(coordinate, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(threads, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(14, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(screenSize, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(coordinate)
-                            .addComponent(fileName, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))))
-                .addContainerGap(538, Short.MAX_VALUE))
+                        .addComponent(screenSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,21 +104,21 @@ public class Panel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(screenSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(threadCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(threads, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(coordinate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(showImageButton)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -121,12 +127,13 @@ public class Panel extends javax.swing.JPanel {
     }//GEN-LAST:event_coordinateActionPerformed
 
     private void showImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showImageButtonActionPerformed
+
         try {
             String fileName = this.fileName.getText();
-            String screenSize = this.screenSize.getText();
-            Integer threadCount = Integer.parseInt(this.threadCount.getText());
-            String coordinate = this.coordinate.getText();
-            RunMe.drawImage(threadCount, screenSize, coordinate, fileName, false);
+            String screenSize = this.screenSize.getSelectedItem().toString();
+            Integer threadCount = Integer.parseInt(this.threads.getSelectedItem().toString());
+            String coordinates = this.coordinate.getText();
+            Fractal18.drawImage(threadCount, screenSize, coordinates, fileName, false);
         } catch (InterruptedException ex) {
             Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -141,8 +148,8 @@ public class Panel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JTextField screenSize;
+    private javax.swing.JComboBox<String> screenSize;
     private javax.swing.JButton showImageButton;
-    private javax.swing.JTextField threadCount;
+    private javax.swing.JComboBox<String> threads;
     // End of variables declaration//GEN-END:variables
 }

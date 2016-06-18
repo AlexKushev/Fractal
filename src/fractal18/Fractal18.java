@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -24,7 +25,7 @@ import org.apache.commons.cli.ParseException;
  *
  * @author User
  */
-public class RunMe {
+public class Fractal18 {
 
     public static BufferedImage[] bufferImage;
 
@@ -33,17 +34,18 @@ public class RunMe {
     public static Integer tasks;
     public static Integer screenHeight;
     public static Integer screenWidth;
- 
+    public static long startTime;
+    public static long endTime;
 
     public static void drawImage(Integer tasks, String initialSize, String initialCoordinates, String outputFileName, boolean quietMode) throws InterruptedException {
 
-        RunMe.tasks = tasks;
-        RunMe.xBegin = Float.parseFloat(initialCoordinates.split(":")[0]);
-        RunMe.xEnd = Float.parseFloat(initialCoordinates.split(":")[1]);
-        RunMe.yBegin = Float.parseFloat(initialCoordinates.split(":")[2]);
-        RunMe.yEnd = Float.parseFloat(initialCoordinates.split(":")[3]);
-        RunMe.screenWidth = Integer.parseInt(initialSize.split("x")[0]);
-        RunMe.screenHeight = Integer.parseInt(initialSize.split("x")[1]);
+        Fractal18.tasks = tasks;
+        Fractal18.xBegin = Float.parseFloat(initialCoordinates.split(":")[0]);
+        Fractal18.xEnd = Float.parseFloat(initialCoordinates.split(":")[1]);
+        Fractal18.yBegin = Float.parseFloat(initialCoordinates.split(":")[2]);
+        Fractal18.yEnd = Float.parseFloat(initialCoordinates.split(":")[3]);
+        Fractal18.screenWidth = Integer.parseInt(initialSize.split("x")[0]);
+        Fractal18.screenHeight = Integer.parseInt(initialSize.split("x")[1]);
 
         BufferedImage bufferTotal = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_3BYTE_BGR);
 
@@ -60,7 +62,7 @@ public class RunMe {
         }
 
         for (int x = 0; x < temp.length; x++) {
-            RunnableJob runnableJob = new RunnableJob();
+            Computable runnableJob = new Computable();
             temp[x] = new Thread(runnableJob);
             temp[x].setName(Integer.toString(x));
             temp[x].start();
@@ -93,14 +95,14 @@ public class RunMe {
         try {
             ImageIO.write(bufferTotal, "PNG", new File(outputFileName));
         } catch (IOException ex) {
-            Logger.getLogger(RunMe.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Fractal18.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     public static void main(String[] args) throws InterruptedException, ParseException {
 
-        final long startTime = System.currentTimeMillis();
+        Fractal18.startTime = System.currentTimeMillis();
 
         Options opt = new Options();
 
@@ -115,11 +117,19 @@ public class RunMe {
             CommandLine cl = parser.parse(opt, args);
 
             Boolean quietMode = cl.hasOption("q");
+              
+            if (!quietMode) {
+                JFrame frame = new JFrame();
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.getContentPane().add(new Panel());
+                frame.pack();
+                frame.setVisible(true);
+            }
 
             Integer tasks = Integer.parseInt(cl.getOptionValue("t", "1"));
 
             String initialSize = cl.getOptionValue("s", "640x480");
-          
+
             String initialCoordinates = cl.getOptionValue("r", "-2.0:2.0:-2.0:2.0");
 
             String outputFileName = cl.getOptionValue("o", "zad15.png");
@@ -129,6 +139,10 @@ public class RunMe {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        
+        Fractal18.endTime = System.currentTimeMillis();
+        
+        System.out.println("Time spent " + (Fractal18.startTime - Fractal18.endTime)  + " ms.");
 
     }
 }
