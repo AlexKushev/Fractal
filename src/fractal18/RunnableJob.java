@@ -34,20 +34,14 @@ public class RunnableJob implements Runnable {
             d = new Double(z_prev.getReal());
 
             if (d.isInfinite() || d.isNaN()) {
-
                 steps = i;
                 break;
-
             }
-
         }
-
         return steps;
-
     }
 
     public RunnableJob() {
-
 
     }
 
@@ -55,41 +49,32 @@ public class RunnableJob implements Runnable {
     @Override
     public void run() {
         Thread thread = Thread.currentThread();
-
         float threadStart = RunMe.yBegin;
 
         RunMe.xLen= (int) (Math.abs(RunMe.xBegin)+Math.abs(RunMe.xEnd));
         RunMe.yLen= (int) (Math.abs(RunMe.yBegin)+Math.abs(RunMe.yEnd));
 
-        // We change the point for each thread
         if(Integer.parseInt(thread.getName())!=0){
             threadStart = threadStart +((RunMe.yLen/RunMe.tasks)*Integer.parseInt(thread.getName()));
         }
 
-        //Step y axis
         double yStep = 1.0/(RunMe.screenHeight*1.2);
 
-        //Dividing the sum to the height 
         for (int i = Integer.parseInt(thread.getName()) * (RunMe.screenHeight / RunMe.tasks); i < (Integer.parseInt(thread.getName()) + 1) * (RunMe.screenHeight / RunMe.tasks); i++) {
 
 
             double yPoint = threadStart + RunMe.yLen * yStep;
 
             int yPx = (int) (Math.abs((yPoint- threadStart)) * ( RunMe.screenHeight / RunMe.yLen));
-            //Step x axis
             double xStep = 1.0/(RunMe.screenWidth*1.2);
 
-            //Calculating the points on x-axis
             for (int j = 0; j < (RunMe.screenWidth); j++) {
 
                 double xPoint = RunMe.xBegin + RunMe.xLen * xStep;
                 int xPx = (int) (Math.abs((xPoint-RunMe.xBegin)) * (RunMe.screenWidth/ RunMe.xLen));
 
-                //Here we call the recursive function that calculates the complex number
                 int r = z_check(new Complex(xPoint, yPoint));
 
-             
-                //Starting to paint
                 if (r == 0) { // inside ...
                     RunMe.bufferImage[Integer.parseInt(thread.getName())].setRGB(xPx, yPx, 0x00ff00);
                 } else if (r <= 10) { // outside ... (rapid move)
@@ -136,11 +121,9 @@ public class RunnableJob implements Runnable {
                 } else {
                     RunMe.bufferImage[Integer.parseInt(thread.getName())].setRGB(xPx, yPx, 0xeeee00);
                 }
-             // Next step of x-axis
                 xStep += 1.0/(RunMe.screenWidth);
 
             }
-            // Next step of y-axis
             yStep += 1.0/(RunMe.screenHeight);
 
         }
