@@ -33,16 +33,17 @@ public class RunMe {
     public static Integer tasks;
     public static Integer screenHeight;
     public static Integer screenWidth;
+ 
 
-    public static void drawImage(Integer tasks, Integer screenWidth, Integer screenHeight, String initialCoordinates, String outputFileName, boolean quietMode) throws InterruptedException {
+    public static void drawImage(Integer tasks, String initialSize, String initialCoordinates, String outputFileName, boolean quietMode) throws InterruptedException {
 
         RunMe.tasks = tasks;
-        RunMe.screenHeight = screenHeight;
-        RunMe.screenWidth = screenWidth;
         RunMe.xBegin = Float.parseFloat(initialCoordinates.split(":")[0]);
         RunMe.xEnd = Float.parseFloat(initialCoordinates.split(":")[1]);
         RunMe.yBegin = Float.parseFloat(initialCoordinates.split(":")[2]);
         RunMe.yEnd = Float.parseFloat(initialCoordinates.split(":")[3]);
+        RunMe.screenWidth = Integer.parseInt(initialSize.split("x")[0]);
+        RunMe.screenHeight = Integer.parseInt(initialSize.split("x")[1]);
 
         BufferedImage bufferTotal = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_3BYTE_BGR);
 
@@ -118,15 +119,12 @@ public class RunMe {
             Integer tasks = Integer.parseInt(cl.getOptionValue("t", "1"));
 
             String initialSize = cl.getOptionValue("s", "640x480");
-
-            Integer screenWidth = Integer.parseInt(initialSize.split("x")[0]);
-            Integer screenHeight = Integer.parseInt(initialSize.split("x")[1]);
-
+          
             String initialCoordinates = cl.getOptionValue("r", "-2.0:2.0:-2.0:2.0");
 
             String outputFileName = cl.getOptionValue("o", "zad15.png");
 
-            drawImage(tasks, screenWidth, screenHeight, initialCoordinates, outputFileName, quietMode);
+            drawImage(tasks, initialSize, initialCoordinates, outputFileName, quietMode);
 
         } catch (ParseException e) {
             e.printStackTrace();
