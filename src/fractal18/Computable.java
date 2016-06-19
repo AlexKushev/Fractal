@@ -12,6 +12,7 @@ import org.apache.commons.math3.complex.Complex;
  * @author User
  */
 public class Computable implements Runnable {
+
     public static Complex z_iter(Complex z, Complex c) {
         return z.cos().multiply(c);
     }
@@ -45,33 +46,35 @@ public class Computable implements Runnable {
 
     }
 
-
     @Override
     public void run() {
         Thread thread = Thread.currentThread();
+        long currentThreadStartTime = System.currentTimeMillis();
+        if (!Fractal18.quietMode) {
+            System.out.println("Thread[" + (thread.getName() + 1) + "] " + "started");
+        }
         float threadStart = Fractal18.yBegin;
 
-        Fractal18.xLen= (int) (Math.abs(Fractal18.xBegin)+Math.abs(Fractal18.xEnd));
-        Fractal18.yLen= (int) (Math.abs(Fractal18.yBegin)+Math.abs(Fractal18.yEnd));
+        Fractal18.xLen = (int) (Math.abs(Fractal18.xBegin) + Math.abs(Fractal18.xEnd));
+        Fractal18.yLen = (int) (Math.abs(Fractal18.yBegin) + Math.abs(Fractal18.yEnd));
 
-        if(Integer.parseInt(thread.getName())!=0){
-            threadStart = threadStart +((Fractal18.yLen/Fractal18.tasks)*Integer.parseInt(thread.getName()));
+        if (Integer.parseInt(thread.getName()) != 0) {
+            threadStart = threadStart + ((Fractal18.yLen / Fractal18.tasks) * Integer.parseInt(thread.getName()));
         }
 
-        double yStep = 1.0/(Fractal18.screenHeight*1.2);
+        double yStep = 1.0 / (Fractal18.screenHeight * 1.2);
 
         for (int i = Integer.parseInt(thread.getName()) * (Fractal18.screenHeight / Fractal18.tasks); i < (Integer.parseInt(thread.getName()) + 1) * (Fractal18.screenHeight / Fractal18.tasks); i++) {
 
-
             double yPoint = threadStart + Fractal18.yLen * yStep;
 
-            int yPx = (int) (Math.abs((yPoint- threadStart)) * ( Fractal18.screenHeight / Fractal18.yLen));
-            double xStep = 1.0/(Fractal18.screenWidth*1.2);
+            int yPx = (int) (Math.abs((yPoint - threadStart)) * (Fractal18.screenHeight / Fractal18.yLen));
+            double xStep = 1.0 / (Fractal18.screenWidth * 1.2);
 
             for (int j = 0; j < (Fractal18.screenWidth); j++) {
 
                 double xPoint = Fractal18.xBegin + Fractal18.xLen * xStep;
-                int xPx = (int) (Math.abs((xPoint-Fractal18.xBegin)) * (Fractal18.screenWidth/ Fractal18.xLen));
+                int xPx = (int) (Math.abs((xPoint - Fractal18.xBegin)) * (Fractal18.screenWidth / Fractal18.xLen));
 
                 int r = z_check(new Complex(xPoint, yPoint));
 
@@ -121,15 +124,19 @@ public class Computable implements Runnable {
                 } else {
                     Fractal18.bufferImage[Integer.parseInt(thread.getName())].setRGB(xPx, yPx, 0xeeee00);
                 }
-                xStep += 1.0/(Fractal18.screenWidth);
+                xStep += 1.0 / (Fractal18.screenWidth);
 
             }
-            yStep += 1.0/(Fractal18.screenHeight);
+            yStep += 1.0 / (Fractal18.screenHeight);
 
         }
-    }
-    
-    
+
+        if (!Fractal18.quietMode) {
+            long currentThreadEndTime = System.currentTimeMillis();
+            System.out.println("Thread[" + (thread.getName() + 1) + "] " + "stoped");
+            System.out.println("Thread[" + (thread.getName() + 1) + "] execution time was " + (currentThreadStartTime - currentThreadEndTime));
+        }
 
     }
 
+}

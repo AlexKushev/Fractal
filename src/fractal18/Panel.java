@@ -133,6 +133,13 @@ public class Panel extends javax.swing.JPanel {
             String screenSize = this.screenSize.getSelectedItem().toString();
             Integer threadCount = Integer.parseInt(this.threads.getSelectedItem().toString());
             String coordinates = this.coordinate.getText();
+            System.out.println(coordinates);
+            if(coordinates.equals("")) {
+                coordinates = "-2.0:2.0:-2.0:2.0";
+            }
+            if (fileName.equals("")) {
+                fileName = "zad15.png";
+            }
             Fractal18.drawImage(threadCount, screenSize, coordinates, fileName, false);
         } catch (InterruptedException ex) {
             Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
