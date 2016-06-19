@@ -102,7 +102,7 @@ public class Fractal18 {
         
         Fractal18.endTime = System.currentTimeMillis();
         
-        System.out.println("Total execution time for current run was " + (Fractal18.startTime - Fractal18.endTime)  + " ms.");
+        System.out.println("Total execution time for current run was " + (Fractal18.endTime - Fractal18.startTime)  + " ms.");
 
     }
 

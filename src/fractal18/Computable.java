@@ -134,7 +134,7 @@ public class Computable implements Runnable {
         if (!Fractal18.quietMode) {
             long currentThreadEndTime = System.currentTimeMillis();
             System.out.println("Thread[" + (thread.getName() + 1) + "] " + "stoped");
-            System.out.println("Thread[" + (thread.getName() + 1) + "] execution time was " + (currentThreadStartTime - currentThreadEndTime));
+            System.out.println("Thread[" + (thread.getName() + 1) + "] execution time was " + (currentThreadEndTime - currentThreadStartTime));
         }
 
     }
